@@ -2,8 +2,8 @@ import pygame
 
 SIZE = 32
 
-GLYPH_IMAGE = pygame.image.load("glyphs.png").convert_alpha()
-MODIFIERS_IMAGE = pygame.image.load("modifiers.png").convert_alpha()
+GLYPH_IMAGE = pygame.image.load("assets/visuals/glyphs.png").convert_alpha()
+MODIFIERS_IMAGE = pygame.image.load("assets/visuals/modifiers.png").convert_alpha()
 
 GLYPHS = {}
 
