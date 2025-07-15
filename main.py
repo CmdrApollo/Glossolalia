@@ -12,6 +12,108 @@ pygame.display.set_caption("Glossolalia")
 
 from glyphs import *
 
+pages = [
+    '+---------------------+---------------------+\n' \
+    '|  Excerpts from the  |                     |\n' \
+    '|    Journal of Sir   |                     |\n' \
+    '|   Barnaby P. Sprat  |                     |\n' \
+    '|*-------------------*|                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '+---------------------+---------------------+\n',
+
+    '+---------------------+---------------------+\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '+---------------------+---------------------+\n',
+
+    '+---------------------+---------------------+\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '+---------------------+---------------------+\n',
+
+    '+---------------------+---------------------+\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '+---------------------+---------------------+\n',
+
+    '+---------------------+---------------------+\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '|                     |                     |\n' \
+    '+---------------------+---------------------+\n',
+]
+
 dictionary = {
     "eat": "poke'i",
     "consume": "poke'i",
@@ -70,10 +172,41 @@ dictionary = {
     "location": "kute",
     "river": "chitekute",
     "sit": "'ape",
-    "LOC": "'ape"
+    "LOC": "'ape",
+    "cut": "shepo",
+    "slice": "shepo",
+    "die": "pazhe",
+    "white": "pati",
+    "light": "pati",
+    "pale": "pati",
+    "dark": "toro",
+    "black": "toro",
+    "oxen": "tabi",
+    "bull": "tabi",
+    "cattle": "tabi",
+    "cow": "tabi",
+    "NEG": "shi",
+    "NEGATIVE": "shi",
+    "no": "shi",
+    "not": "shi",
+    "watch": "hori",
+    "surveil": "hori",
+    "head": "woma",
+    "self": "woma",
+    "sleep": "soe",
+    "rest": "soe",
+    "cause": "'a'i",
+    "tool": "ma",
+    "implement": "ma",
+    "knife": "shepoma",
+    "STOP": "~a"
 }
 
-player_dictionary = {}
+player_dictionary = {
+    "~a": "."
+}
+
+print(len(set(list(dictionary.values()))) - 1)
 
 def translate(gloss: str):
     final = []
@@ -114,16 +247,21 @@ def main():
     journal_open_time = 0.0
     journal_tab = 0
     tabs = [
-        "Gs 1",
-        "Gs 2",
-        "Gs 3",
-        "Gs 4",
-        "Gs 5",
         "Pg 1",
         "Pg 2",
         "Pg 3",
         "Pg 4",
         "Pg 5",
+        "Gs 1",
+        "Gs 2",
+        "Gs 3",
+        "Gs 4",
+        "Gs 5",
+        "Gs 6",
+        "Gs 7",
+        "Gs 8",
+        "Gs 9",
+        "Gs 10",
     ]
 
     editing_word = None
@@ -181,10 +319,10 @@ def main():
         # What do you see in the water with the group of birds?
         # text = translate("you what with bird water sit\nsee.PERF QUESTION")
         # He ate with me and the small animals by the river.
-        text = translate("he and me and small_animal eat.PAST\n1.PL river sit.PAST")
-        # Who goes to the forest and leaves with water?
-        # text = translate("she fish eat.FUT\nshe and man forest go.FUT\n")
-
+        # text = translate("he and me and small_animal eat.PAST\n1.PL river sit.PAST")
+        # You want to know who goes to the forest and leaves with water? I can tell you. It's the pale-lady.
+        text = translate("you who forest go and\nwho and water leave know want\nQUESTION STOP i you talk know STOP she\npale woman is STOP")
+        # Me and the bird want to know who the man is.
         # text = translate("me and bird man who\nis know want")
 
         screen.blit(FONT.render("You see:", False, '#ffff80'), (4, 4))
@@ -199,7 +337,7 @@ def main():
             screen.blit(FONT.render(line, False, '#80ff80'), (4, 120 + 60 * (len(text.splitlines()) + i) + 4))
 
         if journal_open or journal_open_time:
-            journal_surf = pygame.Surface((WIDTH // 2, HEIGHT), pygame.SRCALPHA)
+            journal_surf = pygame.Surface((WIDTH * 0.8, HEIGHT), pygame.SRCALPHA)
             pygame.draw.rect(journal_surf, '#36454F', (0, 0, *journal_surf.get_size()), 0, 8)
 
             n_tabs = len(tabs)
@@ -213,23 +351,26 @@ def main():
                 pygame.draw.rect(journal_surf, color, (i * tab_width, 0, tab_width, 20), 0, -1, 8, 8)
                 journal_surf.blit(t := SMALL_FONT.render(tabs[i], False, 'white' if journal_tab == i else 'gray'), (i * tab_width + tab_width // 2 - t.get_width() // 2, 10 - t.get_height() // 2))
 
-                if pygame.Rect(journal_surf.get_width() + i * tab_width, 0, tab_width, 20).collidepoint(pygame.mouse.get_pos()) and left_click:
+                if pygame.Rect(WIDTH - journal_surf.get_width() + i * tab_width, 0, tab_width, 20).collidepoint(pygame.mouse.get_pos()) and left_click:
                     journal_tab = i
 
             if "Gs" in tabs[journal_tab]:
                 k = int(tabs[journal_tab][-1]) - 1
-                visible_rows = 9
+                visible_rows = 11
                 for i, word in enumerate(list(player_dictionary.keys())[visible_rows * k:visible_rows * (k + 1)]):
                     draw_text(word, journal_surf, 4, 24 + 64 * i, 1, 'white')
 
                     t = FONT.render(player_dictionary[word] + ("_" if word == editing_word else ""), False, '#80ff80' if word == editing_word else 'white')
                     if word != editing_word:
-                        if pygame.Rect(journal_surf.get_width() + journal_surf.get_width() - t.get_width() - 4, 54 + 64 * i - t.get_height() // 2, *t.get_size()).collidepoint(pygame.mouse.get_pos()):
+                        if pygame.Rect(WIDTH - t.get_width() - 4, 54 + 64 * i - t.get_height() // 2, *t.get_size()).collidepoint(pygame.mouse.get_pos()):
                             # hovering over word
                             t = FONT.render(player_dictionary[word], False, 'yellow')
                             if left_click:
                                 editing_word = word
                     journal_surf.blit(t, (journal_surf.get_width() - t.get_width() - 4, 54 + 64 * i - t.get_height() // 2))
+            else:
+                k = int(tabs[journal_tab][-1]) - 1
+                journal_surf.blit(FONT.render(pages[k], False, 'white'), (0, 20))
 
             screen.blit(journal_surf, (WIDTH - (journal_surf.get_width() * pow(1 - journal_open_time if journal_open else journal_open_time, 2.0)), 0))
 

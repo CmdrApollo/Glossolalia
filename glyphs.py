@@ -7,7 +7,7 @@ MODIFIERS_IMAGE = pygame.image.load("assets/visuals/modifiers.png").convert_alph
 
 GLYPHS = {}
 
-for i, cons in enumerate(['p', 'b', 't', 'd', 'k', 'g', 'ch', 'j', 's', 'sh', 'zh', 'h', 'm', 'n', 'r', 'y', 'w', '\'', '-']):
+for i, cons in enumerate(['p', 'b', 't', 'd', 'k', 'g', 'ch', 'j', 's', 'sh', 'zh', 'h', 'm', 'n', 'r', 'y', 'w', '\'', '-', '~']):
     x = i % 10
     y = i // 10
     GLYPHS[cons] = GLYPH_IMAGE.subsurface(x * SIZE, y * SIZE, SIZE, SIZE)
