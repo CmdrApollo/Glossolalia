@@ -51,22 +51,47 @@ def draw_syllable(syllable, surf: pygame.Surface, x, y, color='white'):
     
     return body
 
-def draw_text(text: str, surf, x, y, percent=1, color='white'):
+def draw_text(text: str, surf, x, y, percent=1, color='white', highlight: str|None = None):
     ox = x
-    syl = ""
-    for i in range(len(text[:int(len(text) * percent)])):
-        if text[i] == ' ':
-            x += 60
-            continue
-            
-        if text[i] == '\n':
-            y += 60
-            x = ox
-            continue
+    for line in text[:int(len(text) * percent)].splitlines():
+        raw_words = line.split()
+        segments = []
+        for word in raw_words:
+            parts = word.split('-a')
+            for i, part in enumerate(parts):
+                if part:
+                    segments.append(part)
+                if i < len(parts) - 1:
+                    segments.append('-a')  # treat dash as a valid syllable
 
-        syl += text[i]
-        if syl[-1] in 'aeiou':
-            draw_syllable(syl, surf, x + 36, y + 36, color)
-            x += 60
+        i = 0
+        while i < len(segments):
+            segment = segments[i]
+            if segment == '-a':
+                draw_syllable(
+                    '-a', surf, x + 36, y + 36,
+                    'yellow' if segment == highlight and color != 'black' else color
+                )
+                x += 60  # dash takes up exactly one space
+                i += 1
+                continue
 
             syl = ""
+            for char in segment:
+                syl += char
+                if syl[-1] in 'aeiou':
+                    draw_syllable(
+                        syl, surf, x + 36, y + 36,
+                        'yellow' if segment == highlight and color != 'black' else color
+                    )
+                    syl = ""
+                    x += 60
+
+            # Only add a space after non-dash segments, and only if the next one isn’t a dash
+            if i + 1 < len(segments) and segments[i + 1] != '-a':
+                x += 60  # space between words
+
+            i += 1
+
+        x = ox
+        y += 60

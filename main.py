@@ -4,6 +4,7 @@ pygame.init()
 
 SMALL_FONT = pygame.font.SysFont("courier", 16)
 FONT = pygame.font.SysFont("courier", 32)
+JOURNAL_FONT = pygame.font.SysFont("courier", 28)
 
 WIDTH, HEIGHT = 1080, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -11,202 +12,12 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Glossolalia")
 
 from glyphs import *
-
-pages = [
-    '+---------------------+---------------------+\n' \
-    '|  Excerpts from the  |                     |\n' \
-    '|    Journal of Sir   |                     |\n' \
-    '|   Barnaby P. Sprat  |                     |\n' \
-    '|*-------------------*|                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '+---------------------+---------------------+\n',
-
-    '+---------------------+---------------------+\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '+---------------------+---------------------+\n',
-
-    '+---------------------+---------------------+\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '+---------------------+---------------------+\n',
-
-    '+---------------------+---------------------+\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '+---------------------+---------------------+\n',
-
-    '+---------------------+---------------------+\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '|                     |                     |\n' \
-    '+---------------------+---------------------+\n',
-]
-
-dictionary = {
-    "eat": "poke'i",
-    "consume": "poke'i",
-    "see": "pujo",
-    "bird": "'ako",
-    "fish": "'ako",
-    "small_animal": "'ako",
-    "person": "chati",
-    "man": "chati",
-    "woman": "chati",
-    "1": "wa",
-    "i": "wa",
-    "me": "wa",
-    "2": "di",
-    "you": "di",
-    "3": "to",
-    "he": "to",
-    "him": "to",
-    "she": "to",
-    "her": "to",
-    "it": "to",
-    "PERF": "na",
-    "PAST": "na",
-    "finish": "na",
-    "QUESTION": "ku",
-    "?": "ku",
-    "FUTURE": "so",
-    "FUT": "so",
-    "go": "buta",
-    "walk": "buta",
-    "and": "re",
-    "with": "re",
-    "is": "'abu",
-    "be": "'abu",
-    "live": "'abu",
-    "exist": "'abu",
-    "want": "jota",
-    "desire": "jota",
-    "talk": "kepa",
-    "speak": "kepa",
-    "leave": "'echa",
-    "exit": "'echa",
-    "know": "'uba",
-    "understand": "'uba",
-    "what": "'opo",
-    "who": "'opochati",
-    "forest": "'uditikute",
-    "woods": "'uditikute",
-    "water": "chite",
-    "tree": "'uditi",
-    "plant": "'uditi",
-    "PL": "'ena",
-    "PLURAL": "'ena",
-    "group": "'ena",
-    "place": "kute",
-    "location": "kute",
-    "river": "chitekute",
-    "sit": "'ape",
-    "LOC": "'ape",
-    "cut": "shepo",
-    "slice": "shepo",
-    "die": "pazhe",
-    "white": "pati",
-    "light": "pati",
-    "pale": "pati",
-    "dark": "toro",
-    "black": "toro",
-    "oxen": "tabi",
-    "bull": "tabi",
-    "cattle": "tabi",
-    "cow": "tabi",
-    "NEG": "shi",
-    "NEGATIVE": "shi",
-    "no": "shi",
-    "not": "shi",
-    "watch": "hori",
-    "surveil": "hori",
-    "head": "woma",
-    "self": "woma",
-    "sleep": "soe",
-    "rest": "soe",
-    "cause": "'a'i",
-    "tool": "ma",
-    "implement": "ma",
-    "knife": "shepoma",
-    "STOP": "~a"
-}
+from journal import pages
+from dictionary import dictionary
 
 player_dictionary = {
     "~a": "."
 }
-
-print(len(set(list(dictionary.values()))) - 1)
 
 def translate(gloss: str):
     final = []
@@ -252,17 +63,18 @@ def main():
         "Pg 3",
         "Pg 4",
         "Pg 5",
-        "Gs 1",
-        "Gs 2",
-        "Gs 3",
-        "Gs 4",
-        "Gs 5",
-        "Gs 6",
-        "Gs 7",
-        "Gs 8",
-        "Gs 9",
-        "Gs 10",
     ]
+
+    texts = [
+        translate("she fish eat.FUT STOP\nshe and man forest go.FUT STOP"),
+        translate("you what with bird water sit\nsee.PERF QUESTION STOP"),
+        translate("he and me and small_animal eat.PAST\n1.PL river sit.PAST STOP"),
+        translate("you who forest go and\nwho and water leave know want\nQUESTION STOP i you talk know STOP she\npale woman is STOP"),
+        translate("me and bird man who\nis know want STOP"),
+        translate("1.PL man who is know\nwant.PERF STOP")
+    ]
+
+    current_text = 0
 
     editing_word = None
 
@@ -300,6 +112,26 @@ def main():
         if journal_open_time:
             journal_open_time = max(0, journal_open_time - delta)
 
+        if left_click and not journal_open:
+            x = 0
+            y = 60
+            h = 60
+            text = texts[current_text]
+            for line in text.splitlines():
+                words = []
+                wds = line.split(' ')
+
+                for w in wds:
+                    words += w.split('-a')
+
+                for word in words:
+                    w = 60 * (len(word) // 2)
+                    if pygame.Rect(x, y, w, h).collidepoint(pygame.mouse.get_pos()):
+                        editing_word = word
+                    x += w + 60
+                x = 0
+                y += 60
+
         screen.fill('#26353F')
 
         t = pygame.time.get_ticks() // 150
@@ -313,21 +145,11 @@ def main():
                     r *= 30
                     pygame.draw.circle(screen, '#22313B', (-t + 30 + x * 60, -t + 30 + y * 60), r)
 
-        # sentences:
-        # She will eat fish and go to the forest with the man.
-        # text = translate("she fish eat.FUT\nshe and man forest go.FUT\n")
-        # What do you see in the water with the group of birds?
-        # text = translate("you what with bird water sit\nsee.PERF QUESTION")
-        # He ate with me and the small animals by the river.
-        # text = translate("he and me and small_animal eat.PAST\n1.PL river sit.PAST")
-        # You want to know who goes to the forest and leaves with water? I can tell you. It's the pale-lady.
-        text = translate("you who forest go and\nwho and water leave know want\nQUESTION STOP i you talk know STOP she\npale woman is STOP")
-        # Me and the bird want to know who the man is.
-        # text = translate("me and bird man who\nis know want")
+        text = texts[current_text]
 
         screen.blit(FONT.render("You see:", False, '#ffff80'), (4, 4))
-        draw_text(text, screen, 2, 62, percent, 'black')
-        draw_text(text, screen, 0, 60, percent, '#80ff80')
+        draw_text(text, screen, 2, 62, percent, 'black',  editing_word)
+        draw_text(text, screen, 0, 60, percent, '#80ff80',  editing_word)
 
         screen.blit(FONT.render("You think this means:", False, '#ffff80'), (4, 60 + 60 * len(text.splitlines()) + 4))
         shown_translation = "\n".join(" ".join([a for a in line.split(' ')]) for line in text.splitlines())
@@ -354,25 +176,16 @@ def main():
                 if pygame.Rect(WIDTH - journal_surf.get_width() + i * tab_width, 0, tab_width, 20).collidepoint(pygame.mouse.get_pos()) and left_click:
                     journal_tab = i
 
-            if "Gs" in tabs[journal_tab]:
-                k = int(tabs[journal_tab][-1]) - 1
-                visible_rows = 11
-                for i, word in enumerate(list(player_dictionary.keys())[visible_rows * k:visible_rows * (k + 1)]):
-                    draw_text(word, journal_surf, 4, 24 + 64 * i, 1, 'white')
-
-                    t = FONT.render(player_dictionary[word] + ("_" if word == editing_word else ""), False, '#80ff80' if word == editing_word else 'white')
-                    if word != editing_word:
-                        if pygame.Rect(WIDTH - t.get_width() - 4, 54 + 64 * i - t.get_height() // 2, *t.get_size()).collidepoint(pygame.mouse.get_pos()):
-                            # hovering over word
-                            t = FONT.render(player_dictionary[word], False, 'yellow')
-                            if left_click:
-                                editing_word = word
-                    journal_surf.blit(t, (journal_surf.get_width() - t.get_width() - 4, 54 + 64 * i - t.get_height() // 2))
-            else:
-                k = int(tabs[journal_tab][-1]) - 1
-                journal_surf.blit(FONT.render(pages[k], False, 'white'), (0, 20))
+            k = int(tabs[journal_tab][-1]) - 1
+            journal_surf.blit(JOURNAL_FONT.render(pages[k], False, 'white'), (0, 20))
 
             screen.blit(journal_surf, (WIDTH - (journal_surf.get_width() * pow(1 - journal_open_time if journal_open else journal_open_time, 2.0)), 0))
+
+        if editing_word:
+            t = FONT.render(player_dictionary[editing_word] + ('|' if (pygame.time.get_ticks() // 500) & 1 else ' '), False, '#80ff80')
+            x, y = -4 + WIDTH // 2 - t.get_width() // 2, -4 + HEIGHT // 2 - t.get_height() // 2
+            pygame.draw.rect(screen, '#46555F', (x, y, t.get_width() + 8, t.get_height() + 8), 0, 8)
+            screen.blit(t, (x + 4, y + 4))
 
         pygame.display.flip()
 
