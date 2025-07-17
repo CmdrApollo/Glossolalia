@@ -1,4 +1,3 @@
-
 dictionary = {
     "eat": "poke'i",
     "consume": "poke'i",
@@ -12,14 +11,18 @@ dictionary = {
     "1": "wa",
     "i": "wa",
     "me": "wa",
+    "we": "wa-a'ena",
     "2": "di",
     "you": "di",
+    "y'all": "di-a'ena",
     "3": "to",
     "he": "to",
     "him": "to",
     "she": "to",
     "her": "to",
     "it": "to",
+    "they": "to-a'ena",
+    "them": "to-a'ena",
     "PERF": "na",
     "PAST": "na",
     "finish": "na",
@@ -78,11 +81,12 @@ dictionary = {
     "surveil": "hori",
     "head": "woma",
     "self": "woma",
-    "sleep": "soe",
-    "rest": "soe",
+    "sleep": "so'e",
+    "rest": "so'e",
     "cause": "'a'i",
     "tool": "ma",
     "implement": "ma",
     "knife": "shepoma",
+    "bed": "so'ekute",
     "STOP": "~a"
 }

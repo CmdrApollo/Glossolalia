@@ -2,6 +2,11 @@ import pygame
 
 pygame.init()
 
+AMBIENCE = pygame.mixer.Sound("assets/audio/ambience.wav")
+JOURNAL_SFX = pygame.mixer.Sound("assets/audio/journal.wav")
+MOUSE_SFX = pygame.mixer.Sound("assets/audio/mouse_over.wav")
+SELECT_SFX = pygame.mixer.Sound("assets/audio/select.wav")
+
 SMALL_FONT = pygame.font.SysFont("courier", 16)
 FONT = pygame.font.SysFont("courier", 32)
 JOURNAL_FONT = pygame.font.SysFont("courier", 28)
@@ -12,7 +17,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Glossolalia")
 
 from glyphs import *
-from journal import pages
+from journal import pages, journal_glyph_data
 from dictionary import dictionary
 
 player_dictionary = {
@@ -66,17 +71,25 @@ def main():
     ]
 
     texts = [
-        translate("she fish eat.FUT STOP\nshe and man forest go.FUT STOP"),
-        translate("you what with bird water sit\nsee.PERF QUESTION STOP"),
-        translate("he and me and small_animal eat.PAST\n1.PL river sit.PAST STOP"),
-        translate("you who forest go and\nwho and water leave know want\nQUESTION STOP i you talk know STOP she\npale woman is STOP"),
-        translate("me and bird man who\nis know want STOP"),
-        translate("1.PL man who is know\nwant.PERF STOP")
+        ("Fishy\nBusiness", translate("she fish eat.FUT STOP\nshe and man forest go.FUT STOP")),
+        (  "Watery\nGrave", translate("you what with bird water sit\nsee.PERF QUESTION STOP")),
+        (         "Picnic", translate("he and me and small_animal eat.PAST\n1.PL river sit.PAST STOP")),
+        (       "Yearning", translate("you who forest go and\nwho and water leave know want\nQUESTION STOP i you talk know STOP she\npale woman is STOP")),
+        (  "Who Is\nThat?", translate("me and bird man who\nis know want STOP")),
+        (        "I Know.", translate("i 3.PL 1.PL watch know\nSTOP you know QUESTION STOP")),
+        ("test", translate("we\n\n1.PL"))
     ]
 
     current_text = 0
+    texts_per_line = 5
 
     editing_word = None
+
+    in_menu = True
+
+    AMBIENCE.play(-1)
+
+    mouse_over = -1
 
     run = True
     while run:
@@ -93,8 +106,10 @@ def main():
                 if event.button == 1: left_click = True
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_TAB:
-                    journal_open = not journal_open
-                    journal_open_time = 1.0
+                    if not editing_word and not in_menu:
+                        journal_open = not journal_open
+                        journal_open_time = 1.0
+                        JOURNAL_SFX.play()
                 elif event.key == pygame.K_BACKSPACE:
                     if editing_word:
                         player_dictionary[editing_word] = player_dictionary[editing_word][:-1]
@@ -103,6 +118,11 @@ def main():
                         if player_dictionary[editing_word] == "":
                             player_dictionary[editing_word] = "???"
                         editing_word = None
+                elif event.key == pygame.K_ESCAPE:
+                    if not editing_word and not journal_open:
+                        in_menu = True
+                        current_text = -1
+                        mouse_over = -1
             elif event.type == pygame.TEXTINPUT:
                 if editing_word:
                     if len(player_dictionary[editing_word]) < 10:
@@ -112,11 +132,11 @@ def main():
         if journal_open_time:
             journal_open_time = max(0, journal_open_time - delta)
 
-        if left_click and not journal_open:
+        if left_click and not journal_open and not in_menu:
             x = 0
             y = 60
             h = 60
-            text = texts[current_text]
+            text = texts[current_text][1]
             for line in text.splitlines():
                 words = []
                 wds = line.split(' ')
@@ -128,6 +148,7 @@ def main():
                     w = 60 * (len(word) // 2)
                     if pygame.Rect(x, y, w, h).collidepoint(pygame.mouse.get_pos()):
                         editing_word = word
+                        SELECT_SFX.play()
                     x += w + 60
                 x = 0
                 y += 60
@@ -145,47 +166,74 @@ def main():
                     r *= 30
                     pygame.draw.circle(screen, '#22313B', (-t + 30 + x * 60, -t + 30 + y * 60), r)
 
-        text = texts[current_text]
-
-        screen.blit(FONT.render("You see:", False, '#ffff80'), (4, 4))
-        draw_text(text, screen, 2, 62, percent, 'black',  editing_word)
-        draw_text(text, screen, 0, 60, percent, '#80ff80',  editing_word)
-
-        screen.blit(FONT.render("You think this means:", False, '#ffff80'), (4, 60 + 60 * len(text.splitlines()) + 4))
-        shown_translation = "\n".join(" ".join([a for a in line.split(' ')]) for line in text.splitlines())
-        tt = thought_translation(shown_translation)
-        for i, line in enumerate(tt[:int(len(tt) * percent)].splitlines()):
-            screen.blit(FONT.render(line, False, 'black'), (6, 122 + 60 * (len(text.splitlines()) + i) + 4))
-            screen.blit(FONT.render(line, False, '#80ff80'), (4, 120 + 60 * (len(text.splitlines()) + i) + 4))
-
-        if journal_open or journal_open_time:
-            journal_surf = pygame.Surface((WIDTH * 0.8, HEIGHT), pygame.SRCALPHA)
-            pygame.draw.rect(journal_surf, '#36454F', (0, 0, *journal_surf.get_size()), 0, 8)
-
-            n_tabs = len(tabs)
-            tab_width = journal_surf.get_width() / n_tabs
-
-            for i in range(n_tabs):
-                if journal_tab == i:
-                    color = '#36454F'
+        if in_menu:
+            x = 25
+            y = 50
+            for i in range(len(texts)):
+                r = pygame.Rect(x, y, 180, 100)
+                if r.collidepoint(pygame.mouse.get_pos()):
+                    if mouse_over != i:
+                        MOUSE_SFX.play()
+                    mouse_over = i
+                    if left_click:
+                        in_menu = False
+                        current_text = i
+                        percent = 0
+                        SELECT_SFX.play()
+                    pygame.draw.rect(screen, '#606060', r, 0, 8)
                 else:
-                    color = '#46555F'
-                pygame.draw.rect(journal_surf, color, (i * tab_width, 0, tab_width, 20), 0, -1, 8, 8)
-                journal_surf.blit(t := SMALL_FONT.render(tabs[i], False, 'white' if journal_tab == i else 'gray'), (i * tab_width + tab_width // 2 - t.get_width() // 2, 10 - t.get_height() // 2))
+                    pygame.draw.rect(screen, '#404040', r, 0, 8)
+                screen.blit(t := SMALL_FONT.render(texts[i][0], True, 'white'), (r.centerx - t.get_width() // 2, r.centery - t.get_height() // 2))
+                x += 190
+                if i % (texts_per_line - 1) == 0 and i > 0:
+                    y += 110
+                    x = 25
+        else:
+            text = texts[current_text][1]
 
-                if pygame.Rect(WIDTH - journal_surf.get_width() + i * tab_width, 0, tab_width, 20).collidepoint(pygame.mouse.get_pos()) and left_click:
-                    journal_tab = i
+            screen.blit(FONT.render("You see:", True, '#ffff80'), (4, 4))
+            draw_text(text, screen, 2, 62, percent, 'black',  editing_word)
+            draw_text(text, screen, 0, 60, percent, '#80ff80',  editing_word)
 
-            k = int(tabs[journal_tab][-1]) - 1
-            journal_surf.blit(JOURNAL_FONT.render(pages[k], False, 'white'), (0, 20))
+            screen.blit(FONT.render("You think this means:", True, '#ffff80'), (4, 60 + 60 * len(text.splitlines()) + 4))
+            shown_translation = "\n".join(" ".join([a for a in line.split(' ')]) for line in text.splitlines())
+            tt = thought_translation(shown_translation)
+            for i, line in enumerate(tt[:int(len(tt) * percent)].splitlines()):
+                screen.blit(FONT.render(line, True, 'black'), (6, 122 + 60 * (len(text.splitlines()) + i) + 4))
+                screen.blit(FONT.render(line, True, '#80ff80'), (4, 120 + 60 * (len(text.splitlines()) + i) + 4))
 
-            screen.blit(journal_surf, (WIDTH - (journal_surf.get_width() * pow(1 - journal_open_time if journal_open else journal_open_time, 2.0)), 0))
+            if journal_open or journal_open_time:
+                journal_surf = pygame.Surface((WIDTH * 0.8, HEIGHT), pygame.SRCALPHA)
+                pygame.draw.rect(journal_surf, '#36454F', (0, 0, *journal_surf.get_size()), 0, 8)
 
-        if editing_word:
-            t = FONT.render(player_dictionary[editing_word] + ('|' if (pygame.time.get_ticks() // 500) & 1 else ' '), False, '#80ff80')
-            x, y = -4 + WIDTH // 2 - t.get_width() // 2, -4 + HEIGHT // 2 - t.get_height() // 2
-            pygame.draw.rect(screen, '#46555F', (x, y, t.get_width() + 8, t.get_height() + 8), 0, 8)
-            screen.blit(t, (x + 4, y + 4))
+                n_tabs = len(tabs)
+                tab_width = journal_surf.get_width() / n_tabs
+
+                for i in range(n_tabs):
+                    if journal_tab == i:
+                        color = '#36454F'
+                    else:
+                        color = '#46555F'
+                    pygame.draw.rect(journal_surf, color, (i * tab_width, 0, tab_width, 20), 0, -1, 8, 8)
+                    journal_surf.blit(t := SMALL_FONT.render(tabs[i], True, 'white' if journal_tab == i else 'gray'), (i * tab_width + tab_width // 2 - t.get_width() // 2, 10 - t.get_height() // 2))
+
+                    if pygame.Rect(WIDTH - journal_surf.get_width() + i * tab_width, 0, tab_width, 20).collidepoint(pygame.mouse.get_pos()) and left_click:
+                        journal_tab = i
+                        JOURNAL_SFX.play()
+
+                k = journal_tab
+                journal_surf.blit(JOURNAL_FONT.render(pages[k], True, 'white'), (0, 20))
+
+                for gd in journal_glyph_data[k]:
+                    draw_text(gd["text"], journal_surf, gd['x'], gd['y'] + 20)
+
+                screen.blit(journal_surf, (WIDTH - (journal_surf.get_width() * pow(1 - journal_open_time if journal_open else journal_open_time, 2.0)), 0))
+
+            if editing_word:
+                t = FONT.render(player_dictionary[editing_word] + ('|' if (pygame.time.get_ticks() // 500) & 1 else ' '), True, '#80ff80')
+                x, y = -4 + WIDTH // 2 - t.get_width() // 2, -4 + HEIGHT // 2 - t.get_height() // 2
+                pygame.draw.rect(screen, '#46555F', (x, y, t.get_width() + 8, t.get_height() + 8), 0, 8)
+                screen.blit(t, (x + 4, y + 4))
 
         pygame.display.flip()
 
