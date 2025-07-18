@@ -1,8 +1,8 @@
 pages = [
     '+------------------------+------------------------+\n' \
-    '|   Excerpts from the    |The Dahava Language has |\n' \
-    '|     Journal of Sir     |an incredibly simple    |\n' \
-    '|    Barnaby P. Sprat    |pronominal system that, |\n' \
+    '|     Excerpts from      |The Dahava Language has |\n' \
+    '|     the Journal of     |an incredibly simple    |\n' \
+    '|  Sir Barnaby P. Sprat  |pronominal system that, |\n' \
     '| *--------------------* |like the language itself|\n' \
     '|I have here noted a few |largely lacks plurality |\n' \
     '|words that I have often |only having 1st, 2nd,   |\n' \
@@ -33,7 +33,7 @@ pages = [
     '|                        |the spoken language away|\n' \
     '|The following seems to  |from its pure CV roots. |\n' \
     '|be a conjunction used in|This, however, is pure  |\n' \
-    '|both simple clause      |speculation, and I have |\n' \
+    '|simplistic clause       |speculation, and I have |\n' \
     '|chaining:               |no evidence to cite one |\n' \
     '|                        |way or the other.       |\n' \
     '|                        |Regardless, each base   |\n' \
