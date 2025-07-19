@@ -4,12 +4,13 @@ import random
 pygame.init()
 
 AMBIENCE = pygame.mixer.Sound("assets/audio/ambience.wav")
+AMBIENCE.set_volume(0.1)
 JOURNAL_SFX = pygame.mixer.Sound("assets/audio/journal.wav")
+JOURNAL_SFX.set_volume(0.1)
 MOUSE_SFX = pygame.mixer.Sound("assets/audio/mouse_over.wav")
-MOUSE_SFX.set_volume(0)
+MOUSE_SFX.set_volume(0.1)
 SELECT_SFX = pygame.mixer.Sound("assets/audio/select.wav")
-TEXT_SFX = [pygame.mixer.Sound(f"assets/audio/text{i + 1}.wav") for i in range(4)]
-for t in TEXT_SFX: t.set_volume(0)
+SELECT_SFX.set_volume(0.1)
 
 SMALL_FONT = pygame.font.SysFont("courier", 16)
 FONT = pygame.font.SysFont("courier", 32)
@@ -18,11 +19,14 @@ JOURNAL_FONT = pygame.font.SysFont("courier", 28)
 WIDTH, HEIGHT = 1080, 720
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
+pygame.display.set_icon(pygame.image.load("assets/icon.bmp"))
 pygame.display.set_caption("Glossolalia")
 
 from glyphs import *
 from journal import pages, journal_glyph_data
 from dictionary import dictionary
+
+print(len(list(set(dictionary.values()))), "unique words in dictionary")
 
 player_dictionary = {
     "~a": "."
@@ -92,14 +96,19 @@ def main():
         # "i want you to know [that] i love you"
         ("A Love Note\nHidden Under a\nFloor Tile", translate("i you i you love know want STOP")),
         # "don't run in the house"
-        ("A Family Rule\nEtched Into the\nFireplace Mantle", translate("you house LOC STOP you run NEG STOP")),
+        ("A Family Rule\nEtched Into the\nFireplace Mantle", translate("you house when LOC you run\nNEG STOP")),
         # "the bird and the fish were arguing. the bird and the fish spoke with each other. the bird said the the fish, 'we should not be arguing. it is not helpful'. the bird and the fish no longer argued."
         ("A Folk Tale\nWritten on a\nScrap of Paper", translate("bird and fish dispute.PERF STOP\nbird and fish self talk.PERF\nSTOP bird we self dispute should\nNEG say.PERF STOP bird and fish\ndispute.PERF NEG STOP")),
-        ("A Joke Painted\non the Inside\nof a Closet Door", translate("")),
-        ("A Blessing Hidden\nUnder the Lip of\na Chalice", translate("")),
-        ("A Lost Prayer\nSewn into a Wound\nDressing", translate("")),
-        ("A Code Hidden\nin the Folds of\na Flag", translate("")),
-        ("A False\nConfession\nWritten in Ink", translate("")),
+        # "why did the person fight the cow? they wanted milk."
+        ("A Joke Painted\non the Inside\nof a Closet Door", translate("man cow why fight.PERF STOP\nhe milk want.PERF STOP")),
+        # "the gods are protecting us. we are fed. we are safe."
+        ("A Blessing Hidden\nUnder the Lip of\na Chalice", translate("god.PL we protect STOP\nwe feed take STOP\nwe safe be STOP")),
+        # "we thank the gods. they give us food. they let us eat. they let us live."
+        ("A Lost Prayer\nSewn Into a Wound\nDressing", translate("we god.PL thank STOP\n3.PL we food give STOP\n3.PL we eat let STOP\n3.PL we live let STOP")),
+        # "leave the house. run to the forest. watch the river."
+        ("A Code Hidden\nin the Folds of\na Flag", translate("you house leave STOP you forest\nrun STOP you river watch STOP")),
+        # "i said that i fought. i didn't fight. i couldn't fight."
+        ("A Confession\nWritten in Ink", translate("i i fight.PERF say.PERF STOP i\nfight.PERF NEG STOP i fight can.PERF\nNEG STOP")),
         ("test", translate("you who forest go and\nwho and water leave know want\nQUESTION STOP i you can tell STOP she\npale woman is STOP\nbird and fish dispute.PERF STOP\nbird and fish self talk.PERF\nSTOP bird we self dispute should\nNEG say.PERF STOP bird and fish\ndispute.PERF NEG STOP")),
         ("test", translate("")),
         ("test", translate("")),
@@ -110,11 +119,12 @@ def main():
         ("test", translate("")),
         ("test", translate("")),
         ("test", translate("")),
-        ("test", translate("")),
-        ("test", translate("")),
-        ("test", translate("")),
-        ("test", translate("")),
-        ("test", translate("")),
+        # "when you find us, we will kill you."
+        ("???", translate("you we when find we\nyou kill.FUT STOP\n")),
+        ("???", translate("")),
+        ("???", translate("")),
+        ("???", translate("")),
+        ("???", translate("")),
     ]
 
     current_text = 0
@@ -177,8 +187,6 @@ def main():
             percent = min(1, percent + delta / 2.0)
             t2 = texts[current_text][1]
             t2 = t2[:int(len(t2) * percent)]
-            if len(t) and t != t2 and t[-1] in ' aeiou' and t2[-1] != ' ':
-                random.choice(TEXT_SFX).play()
             if left_click:
                 x = 0
                 y = 60
@@ -229,6 +237,7 @@ def main():
                         in_menu = False
                         current_text = i
                         percent = 0
+                        scroll_y = 0
                         SELECT_SFX.play()
                     pygame.draw.rect(screen, c, r, 0, 8)
                 else:
