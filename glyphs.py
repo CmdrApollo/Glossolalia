@@ -1,13 +1,15 @@
 import pygame
 
+TS = 60
+
 SIZE = 32
 
-GLYPH_IMAGE = pygame.image.load("assets/visuals/glyphs.png").convert_alpha()
+GLYPH_IMAGE = pygame.image.load("assets/visuals/glyphsSerif.png").convert_alpha()
 MODIFIERS_IMAGE = pygame.image.load("assets/visuals/modifiers.png").convert_alpha()
 
 GLYPHS = {}
 
-for i, cons in enumerate(['p', 'b', 't', 'd', 'k', 'g', 'ch', 'j', 's', 'sh', 'zh', 'h', 'm', 'n', 'r', 'y', 'w', '\'', '-', '~']):
+for i, cons in enumerate(['p', 'b', 't', 'd', 'k', 'g', 'C', 'j', 's', 'S', 'Z', 'h', 'm', 'n', 'r', 'y', 'w', '\'', '-', '~']):
     x = i % 10
     y = i // 10
     GLYPHS[cons] = GLYPH_IMAGE.subsurface(x * SIZE, y * SIZE, SIZE, SIZE)
@@ -16,7 +18,7 @@ MODIFIERS = [MODIFIERS_IMAGE.subsurface(i * 16, 0, 16, 16) for i in range(5)]
 
 def draw_syllable(syllable, surf: pygame.Surface, x, y, color='white'):
     s = 2
-    if syllable[:-1] in ['b', 'd', 'g', 'j', 'zh']:
+    if syllable[:-1] in ['b', 'd', 'g', 'j', 'Z']:
         # draw voicing diacritic
         m = MODIFIERS[0].copy()
         m.fill(color, special_flags=pygame.BLEND_RGBA_MULT)

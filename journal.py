@@ -1,8 +1,8 @@
 pages = [
     '+------------------------+------------------------+\n' \
-    '|     Excerpts from      |The Dahava Language has |\n' \
-    '|     the Journal of     |an incredibly simple    |\n' \
-    '|  Sir Barnaby P. Sprat  |pronominal system that, |\n' \
+    '|   Excerpts from the    |The Dahava Language has |\n' \
+    '|   the Journal of Sir   |an incredibly simple    |\n' \
+    '|    Barnaby P. Sprat    |pronominal system that, |\n' \
     '| *--------------------* |like the language itself|\n' \
     '|I have here noted a few |largely lacks plurality |\n' \
     '|words that I have often |only having 1st, 2nd,   |\n' \
@@ -113,6 +113,98 @@ pages = [
     '|following glyph is      |continue to journal.    |\n' \
     '|placed between the two  |               - Barnaby|\n' \
     '+------------------------+------------------------+\n',
+
+    '+------------------------+------------------------+\n' \
+    '| The Continued Writings |from this root. However,|\n' \
+    '|   of Sir Barnaby P.    |it is not only question |\n' \
+    '|         Sprat          |words, but many core    |\n' \
+    '| *--------------------* |words that are also     |\n' \
+    '|It seems that Dahava is |encoded via noun        |\n' \
+    '|particularly fond of    |compounding. This occurs|\n' \
+    '|compounding. For        |not only with other     |\n' \
+    '|example, the general    |nouns, but with verbs as|\n' \
+    '|word for "what", which  |well, in which case the |\n' \
+    '|is represented by the   |noun appears after the  |\n' \
+    '|following word,         |verb. It has before been|\n' \
+    '|                        |posited that Dahava has |\n' \
+    '|                        |a rich system of verbal |\n' \
+    '|                        |derivational suffixes   |\n' \
+    '|                        |that encode things such |\n' \
+    '|is often seen stuck at  |as the place the verb   |\n' \
+    '|front of other nouns,   |occurs, the typical     |\n' \
+    '|indicating that so-     |agent of the verb, etc. |\n' \
+    '|called "wh" question    |Lastly, the following   |\n' \
+    '|words are all formed    |glyph seems to act as a |\n' \
+    '+------------------------+------------------------+\n',
+
+    '+------------------------+------------------------+\n' \
+    '|verb nominalizer, and   |                        |\n' \
+    '|can seemingly be used on|                        |\n' \
+    '|almost any verb in order|                        |\n' \
+    '|to encode that the verb |        Location        |\n' \
+    '|should instead be       |                        |\n' \
+    '|treated as a noun.      |                        |\n' \
+    '|                        |                        |\n' \
+    '|                        |          Agent         |\n' \
+    '|                        |                        |\n' \
+    '|                        |                        |\n' \
+    '|I have here noted some  |                        |\n' \
+    '|of the commonly seen    |          Tool          |\n' \
+    '|derivational endings    |                        |\n' \
+    '|which can, similarly to |                        |\n' \
+    '|the nominalizer, turn   |With that, I will call  |\n' \
+    '|verbs into nouns. Again,|this journal entry      |\n' \
+    '|encoding meanings such  |completed.              |\n' \
+    '|as location, agent, and |                        |\n' \
+    '|the tool used to enact  |            Until Later,|\n' \
+    '|the verb.               |               - Barnaby|\n' \
+    '+------------------------+------------------------+\n',
+
+    '+------------------------+------------------------+\n' \
+    '|I have here scribed a   |                        |\n' \
+    '|personal translation of |                        |\n' \
+    '|a short text, both      |                        |\n' \
+    '|literal and otherwise.  | Lead  -  NOM  -   Hour |\n' \
+    '|                        |                        |\n' \
+    '|                        |                        |\n' \
+    '|                        |                        |\n' \
+    '| I      Food            |  LOC      PASSIVE    I |\n' \
+    '|                        |                        |\n' \
+    '|                        |                        |\n' \
+    '|Make - PAST   and     I |  I - GEN        Day    |\n' \
+    '|                        |                        |\n' \
+    '|                        |                        |\n' \
+    '|                        |                        |\n' \
+    '| It        Eat   - PAST |Think-About             |\n' \
+    '|                        |                        |\n' \
+    '|                        |Now for the not-so-     |\n' \
+    '|                        |literal translation of  |\n' \
+    '|STOP                    |this text: "I made food |\n' \
+    '|                        |and I ate it. Later, I  |\n' \
+    '+------------------------+------------------------+\n',
+
+    '+------------------------+------------------------+\n' \
+    '|think about my day."    |because it displays that|\n' \
+    '|                        |adjectives are noun-like|\n' \
+    '|Despite the utter       |and precede the verb.   |\n' \
+    '|mundanity of this text, |This can be gleaned due |\n' \
+    '|there are a few         |to the use of the       |\n' \
+    '|interesting things of   |nominalizer after the   |\n' \
+    '|note within it. Firstly,|verb "to lead", which is|\n' \
+    '|I have since figured out|then placed before the  |\n' \
+    '|which tense marker      |word for "time" or      |\n' \
+    '|belongs to which tense, |"hour", which is then   |\n' \
+    '|as the speaker speaks of|followed by a locative  |\n' \
+    '|their day which has     |(and for some reason a  |\n' \
+    '|already happened,       |passive), giving the    |\n' \
+    '|indicating that what I  |final phrase a meaning  |\n' \
+    '|thought was either a    |of "afterwards" or more |\n' \
+    '|past or future marker,  |literally, "sat in the  |\n' \
+    '|is indeed a past-tense  |after hour". There isn\'t|\n' \
+    '|marker. Next, the use of|much else of note within|\n' \
+    '|the phrase "the leading |this text. Though I hope|\n' \
+    '|hour" is of note, mainly|it can be of service.   |\n' \
+    '+------------------------+------------------------+\n',
 ]
 
 journal_glyph_data = [
@@ -174,5 +266,47 @@ journal_glyph_data = [
             "x": 618,
             "y": 76 + 260
         }
-    ]
+    ],
+    [
+        {
+            "text": "'opo",
+            "x": 120,
+            "y": 420
+        }
+    ],
+    [
+        {
+            "text": "me",
+            "x": 150,
+            "y": 236
+        },
+        {
+            "text": "ke",
+            "x": 618,
+            "y": 60
+        },
+        {
+            "text": "no",
+            "x": 618,
+            "y": 180
+        },
+        {
+            "text": "ma",
+            "x": 618,
+            "y": 300
+        }
+    ],
+    [
+        {
+            "text": "wa yoka\n\ngo-ana re wa\n\nto poke'i-ana\n\n~a",
+            "x": 10,
+            "y": 176
+        },
+        {
+            "text": "'ita-ame-ajire\n\n'ape 'anu wa\n\nwa-aji hesu\n\nsoto ~a",
+            "x": 442,
+            "y": 56
+        },
+    ],
+    []
 ]
